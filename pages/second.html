@@ -6,14 +6,18 @@
     <title>LOVE U💓</title>
 
     <link rel="stylesheet" href="../src/output.css" />
+    <style>
+      .hidden-slide {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+    </style>
   </head>
   <body class="min-h-screen">
-    <audio id="myAudio" autoplay loop>
-      <source
-        src="../assets/music/1.mp3"
-        type="audio/mpeg"
-      />
-    </audio>
+    <!-- <audio id="myAudio" autoplay loop>
+      <source src="../assets/music/1.mp3" type="audio/mpeg" />
+    </audio> -->
+    <div id="audioContainer"></div>
     <div class="hero bg-base-300 min-h-screen lg:min-h-screen">
       <div class="hero-content text-center">
         <div class="max-w-lg animate-fadeindown">
@@ -116,23 +120,92 @@
             <br />
           </p>
         </div>
+        <div class="divider divider-secondary"></div>
+        <div class="flex flex-col lg:flex-row justify-center">
+          <div
+            class="font-bold text-2xl lg:text-6xl p-3 m-2 lg:leading-tight text-center flex flex-row lg:flex-col justify-center items-center"
+          >
+            <h1 class="mx-2">How Was Our</h1>
+            <h1>First Text?</h1>
+          </div>
+          <div
+            class="card bg-base-100 w-11/12 lg:w-96 shadow-xl hidden-slide m-2"
+            id="slidingDiv"
+          >
+            <figure>
+              <img src="../assets/img/text.jpg" />
+            </figure>
+          </div>
+        </div>
+        <div class="divider divider-secondary"></div>
+        <div class="flex flex-col-reverse lg:flex-row justify-center">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0166154925837!2d106.81001847523888!3d-6.261541193727029!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f1f0430433cf%3A0x6b92d13c2900de0e!2sKemang%20Village%20Jakarta!5e0!3m2!1sen!2sid!4v1729530441327!5m2!1sen!2sid"
+            class="w-full h-[400px] sm:h-[500px] border-0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+          <div
+            class="font-bold text-xl lg:text-5xl p-3 text-center flex flex-col justify-center items-center hidden-slide"
+            id="slidingText"
+          >
+            <h1 class="mx-2">This Was The Place</h1>
+            <h1>We Knew Each Other</h1>
+          </div>
+        </div>
+        <!-- <div class="divider divider-secondary"></div> -->
       </div>
     </div>
+    <script>
+      // Intersection Observer API
+      document.addEventListener("DOMContentLoaded", function () {
+        const slidingDiv = document.getElementById("slidingDiv");
+        const slidingText = document.getElementById("slidingText");
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              // Add the animation class when the element is visible
+              slidingDiv.classList.remove("hidden-slide");
+              slidingDiv.classList.add("animate-slide-in-right");
+              slidingText.classList.remove("hidden-slide");
+              slidingText.classList.add("animate-slide-in-left");
+            }
+          });
+        });
+
+        observer.observe(slidingDiv);
+        observer.observe(slidingText);
+      });
+    </script>
+    <script>
+      console.log(navigator.userAgent);
+      function isIphone() {
+        return /iPhone/i.test(navigator.userAgent);
+      }
+
+      const audioContainer = document.getElementById("audioContainer");
+      const audioElement = document.createElement("audio");
+
+      // Set the attributes based on device type
+      audioElement.id = "myAudio";
+      audioElement.loop = true;
+      audioElement.autoplay = true; // No muted attribute for Android users
+
+      if (isIphone()) {
+        audioElement.autoplay = true;
+        audioElement.muted = true; // Add muted attribute for iPhone users
+      }
+
+      const sourceElement = document.createElement("source");
+      sourceElement.src = "../assets/music/1.mp3";
+      sourceElement.type = "audio/mpeg";
+
+      audioElement.appendChild(sourceElement);
+      audioContainer.appendChild(audioElement);
+
+      // Ensure audio is loaded
+      audioElement.load();
+    </script>
   </body>
-  <!-- <script>
-    const audio = document.getElementById('myAudio');
-    const section = document.getElementById('letter');
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting) {
-          audio.play()
-        } else {jjjk
-          audio.pause()
-        }
-      })
-    });
-
-    observer.observe(section);
-  </script> -->
 </html>
