@@ -12,12 +12,13 @@
         opacity: 0;
       }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
   </head>
   <body class="min-h-screen">
-    <!-- <audio id="myAudio" autoplay loop>
+    <!-- <audio id="myAudio">
       <source src="../assets/music/1.mp3" type="audio/mpeg" />
     </audio> -->
-    <div id="audioContainer"></div>
+    <!-- <div id="audioContainer"></div> -->
     <div class="hero bg-base-300 min-h-screen lg:min-h-screen">
       <div class="hero-content text-center">
         <div class="max-w-lg animate-fadeindown">
@@ -26,7 +27,7 @@
       </div>
     </div>
 
-    <div class="container m-auto">
+    <div class="container m-auto overflow-x-hidden">
       <div class="divider divider-secondary">WLE</div>
       <div class="image-section p-3 my-5">
         <div class="image-section-title lg:p-2 text-center">
@@ -107,37 +108,44 @@
         </div>
         <div class="letter border p-3 rounded-md bg-base-200" id="letter">
           <h1 class="font-bold text-center text-xl lg:text-3xl font-serif my-2">
-            Hai Babe...
+            Hai Lilie...
           </h1>
-          <p class="text-pretty font-serif text-center lg:text-center">
-            Selamat ulang tahun yang ke 18 yaa... semoga diumur kamu yang
-            sekarang kamu makin sehat, bahagia.
-            <br />
-            Dan semoga di ulang tahun kamu kali ini kamu mendapatkan apapun yang
-            kamu mau. <br />
-            I just want you to know that i love u, and i always be at your side
-            anytime you need me okay.
-            <br />
+          <p class="text-pretty font-serif text-center lg:text-center text-lg">
+            Selamat ulang tahun yang ke 18 yaa... <br />
+            Di hari kamu yang spesial ini, aku berdoa semoga kamu sehat selalu,
+            bahagia selalu. <br />
+            Juga semoga kamu mendapatkan apa yang kamu mau.<br />
+            I feel so lucky to have u in my life. <br />
+            Every moment with you its such a beautiful memory. <br />
+            I hope u always stay on my side. <br />
+            I'll always be there anytime u need me okay. <br />
+            I love u li. <br />
+            I love u my tiramisu cake.
           </p>
         </div>
         <div class="divider divider-secondary"></div>
-        <div class="flex flex-col lg:flex-row justify-center">
+        <!-- SLIDE IN  -->
+        <div
+          class="flex overflow-hidden flex-col lg:flex-row justify-center items-center space-y-4 lg:space-y-0"
+        >
           <div
             class="font-bold text-2xl lg:text-6xl p-3 m-2 lg:leading-tight text-center flex flex-row lg:flex-col justify-center items-center"
           >
             <h1 class="mx-2">How Was Our</h1>
-            <h1>First Text?</h1>
+            <h1><span class="text-secondary">First</span> Text?</h1>
           </div>
           <div
-            class="card bg-base-100 w-11/12 lg:w-96 shadow-xl hidden-slide m-2"
+            class="card bg-base-100 w-11/12 lg:w-96 shadow-xl hidden-slide hidden lg:m-2"
             id="slidingDiv"
           >
-            <figure>
-              <img src="../assets/img/text.jpg" />
+            <figure class="w-full h-auto object-cover">
+              <img src="../assets/img/text.jpg" class="w-full h-auto" />
             </figure>
           </div>
         </div>
+
         <div class="divider divider-secondary"></div>
+        <!-- SLIDE TEXT -->
         <div class="flex flex-col-reverse lg:flex-row justify-center">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.0166154925837!2d106.81001847523888!3d-6.261541193727029!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f1f0430433cf%3A0x6b92d13c2900de0e!2sKemang%20Village%20Jakarta!5e0!3m2!1sen!2sid!4v1729530441327!5m2!1sen!2sid"
@@ -151,61 +159,111 @@
             id="slidingText"
           >
             <h1 class="mx-2">This Was The Place</h1>
-            <h1>We Knew Each Other</h1>
+            <h1>We <span class="text-secondary">Knew</span> Each Other</h1>
           </div>
         </div>
-        <!-- <div class="divider divider-secondary"></div> -->
+
+        <div class="divider divider-secondary"></div>
+
+        <div
+          class="flex overflow-hidden flex-col lg:flex-row justify-center items-center space-y-4 lg:space-y-0"
+        >
+          <div
+            class="font-bold text-large lg:text-6xl p-3 m-2 lg:leading-tight text-center flex flex-row lg:flex-col justify-center items-center"
+          >
+            <h1 class="">
+              Something That Remind Me <span class="text-secondary">Of U</span>
+            </h1>
+          </div>
+          <div
+            class="card bg-base-100 w-11/12 lg:w-96 shadow-xl hidden-slide hidden lg:m-2"
+            id="slidingDiv2"
+          >
+            <figure class="w-full h-auto object-cover">
+              <img src="../assets/img/cake.jpg" class="w-full h-auto" />
+            </figure>
+          </div>
+        </div>
+
+        <div class="divider divider-secondary"></div>
+        <div class="flex items-center justify-center">
+          <button class="btn btn-secondary text-white" id="confetti-btn">
+            Maybe thats it, please click me!
+          </button>
+        </div>
       </div>
     </div>
+    <script>
+      const defaults = {
+        spread: 360,
+        ticks: 100,
+        gravity: 0.5, // Make sure gravity is non-zero for falling effect
+        decay: 0.94,
+        startVelocity: 30,
+        shapes: ["heart"],
+        colors: ["#FFC0CB", "#FF69B4", "#FF1493", "#FFFFFF"], // Fixed hex codes for pink colors
+      };
+
+      function createHeartConfetti() {
+        // First burst with 50 hearts, size 2
+        confetti({
+          ...defaults,
+          particleCount: 50,
+          scalar: 2,
+          origin: { x: Math.random(), y: 0 }, // Random x, top of the screen (y: 0)
+        });
+
+        // Second burst with 25 hearts, size 3
+        confetti({
+          ...defaults,
+          particleCount: 25,
+          scalar: 3,
+          origin: { x: Math.random(), y: 0 }, // Random x, top of the screen (y: 0)
+        });
+
+        // Third burst with 10 hearts, size 4
+        confetti({
+          ...defaults,
+          particleCount: 10,
+          scalar: 4,
+          origin: { x: Math.random(), y: 0 }, // Random x, top of the screen (y: 0)
+        });
+      }
+
+      // Start the continuous confetti effect when button is clicked
+      document
+        .getElementById("confetti-btn")
+        .addEventListener("click", function () {
+            const interval = setInterval(createHeartConfetti, 2000); // Trigger confetti every 500ms
+            setTimeout(function(){
+              clearInterval(interval);
+            }, 10000)
+        });
+    </script>
     <script>
       // Intersection Observer API
       document.addEventListener("DOMContentLoaded", function () {
         const slidingDiv = document.getElementById("slidingDiv");
+        const slidingDiv2 = document.getElementById("slidingDiv2");
         const slidingText = document.getElementById("slidingText");
         const observer = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               // Add the animation class when the element is visible
-              slidingDiv.classList.remove("hidden-slide");
-              slidingDiv.classList.add("animate-slide-in-right");
+              slidingDiv.classList.remove("hidden-slide", "hidden");
+              slidingDiv.classList.add("animate-slide-in-right", "block");
+              slidingDiv2.classList.remove("hidden-slide", "hidden");
+              slidingDiv2.classList.add("animate-slide-in-right", "block");
               slidingText.classList.remove("hidden-slide");
-              slidingText.classList.add("animate-slide-in-left");
+              slidingText.classList.add("animate-slide-in-left", "block");
             }
           });
         });
 
         observer.observe(slidingDiv);
+        observer.observe(slidingDiv2);
         observer.observe(slidingText);
       });
-    </script>
-    <script>
-      console.log(navigator.userAgent);
-      function isIphone() {
-        return /iPhone/i.test(navigator.userAgent);
-      }
-
-      const audioContainer = document.getElementById("audioContainer");
-      const audioElement = document.createElement("audio");
-
-      // Set the attributes based on device type
-      audioElement.id = "myAudio";
-      audioElement.loop = true;
-      audioElement.autoplay = true; // No muted attribute for Android users
-
-      if (isIphone()) {
-        audioElement.autoplay = true;
-        audioElement.muted = true; // Add muted attribute for iPhone users
-      }
-
-      const sourceElement = document.createElement("source");
-      sourceElement.src = "../assets/music/1.mp3";
-      sourceElement.type = "audio/mpeg";
-
-      audioElement.appendChild(sourceElement);
-      audioContainer.appendChild(audioElement);
-
-      // Ensure audio is loaded
-      audioElement.load();
     </script>
   </body>
 </html>
